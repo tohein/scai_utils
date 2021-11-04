@@ -12,7 +12,7 @@ Requirements
 
       usage: count_allelic.py [-h] --cell_index CELL_INDEX --regions REGIONS --bam
                               BAM_FILE --vcf VCF_FILE --out_prefix OUT_PREFIX
-                              [--save-sparse] [--output_bam]
+                              [--save-sparse] [--output-bam]
 
       optional arguments:
         -h, --help            show this help message and exit
@@ -29,4 +29,4 @@ Requirements
                               Prefix used for output files.
         --save-sparse         Output count matrices in sparse format. Highly
                               recommended!
-        --output_bam          Output allele-specific bam files.
+        --output-bam          Output allele-specific bam files.
