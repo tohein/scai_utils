@@ -247,7 +247,7 @@ def parse_args():
                             'recommended!'),
                         action='store_true',
                         default=False)
-    parser.add_argument('--output_bam',
+    parser.add_argument('--output-bam',
                         help='Output allele-specific bam files.',
                         action='store_true',
                         default=False)
@@ -288,7 +288,7 @@ def main():
         bam_allele2 = pysam.AlignmentFile(args.out_prefix + 'reads_allele2.bam', 'wb', template=sam_file)
         bam_total = pysam.AlignmentFile(args.out_prefix + 'reads_total.bam', 'wb', template=sam_file)
 
-    print('Counting allele-specific read counts per region ...', end='')
+    print('Counting allele-specific read counts per region ...')
     print(' Regions processed: 0', end='\r')
 
     # iterate over regions
