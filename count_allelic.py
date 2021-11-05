@@ -21,7 +21,7 @@
 """
 This program reads BAM files and counts the number of reads that match
 either allele for all regions in the provided region file and all cell barcodes
-from the cell index file. 
+from the cell index file.
 
 This script is a heavily modified version of the code originally developped for
 the WASP pipeline:
@@ -163,7 +163,7 @@ def get_read_allele(read, vcf_file):
     """Determines the read allele (1 or 2) or returns None if inconclusive."""
     global partially_mapped_reads
 
-    # TODO 
+    # TODO
     # if start < 1 or end > chrom.length:
     #     sys.stderr.write('WARNING: skipping read aligned past end of '
     #                      'chromosome. read: %d-%d, %s:1-%d\n' %
@@ -198,7 +198,7 @@ def print_sparse_row(x, row, file):
 
     For each element e with index i in x, this function prints a tab-separated
     entry (row, i, e) to the given file.
-    
+
     Args:
         x: List of row values.
         row: Row number.
@@ -241,13 +241,13 @@ def parse_args():
                         help='Prefix used for output files.',
                         metavar='OUT_PREFIX',
                         required=True)
-    parser.add_argument('--save-sparse',
+    parser.add_argument('--save_sparse',
                         help=(
                             'Output count matrices in sparse format. Highly '
                             'recommended!'),
                         action='store_true',
                         default=False)
-    parser.add_argument('--output-bam',
+    parser.add_argument('--output_bam',
                         help='Output allele-specific bam files.',
                         action='store_true',
                         default=False)
@@ -289,14 +289,11 @@ def main():
         bam_total = pysam.AlignmentFile(args.out_prefix + 'reads_total.bam', 'wb', template=sam_file)
 
     print('Counting allele-specific read counts per region ...')
-    print(' Regions processed: 0', end='\r')
 
     # iterate over regions
     region_cnt = 0
     for line in regions_file:
         region_cnt += 1
-        if region_cnt % 100 == 0:
-            print(' Regions processed: %d' % region_cnt, end='\r')
 
         region = line.split()
         region_name = '_'.join(region)
@@ -310,7 +307,8 @@ def main():
             # determine allele for this read
             allele = get_read_allele(read, vcf_file)
 
-            cell_barcode = read.query_name.split(':')[0]
+            cell_barcode = read.get_tag('CB')
+
             if allele == 1:
                 try:
                     region_counts_allele1[cell_barcode_dict[cell_barcode]] += 1
@@ -350,6 +348,8 @@ def main():
                 '\t'.join([region_name] + [str(x) for x in region_counts_total]),
                 file=counts_total)
 
+        print(' Regions processed: %d' % region_cnt, end='\r', flush=True)
+
     if args.output_bam:
         bam_allele1.close()
         bam_allele2.close()
@@ -357,7 +357,6 @@ def main():
     sam_file.close()
     vcf_file.close()
 
-    print(' Regions processed: %d' % region_cnt)
     print('Done.')
 
     # check if any of the reads contained an unimplemented CIGAR
