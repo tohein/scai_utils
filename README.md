@@ -3,7 +3,7 @@ Scripts for allele-specific analyses of single-cell sequencing data.
 
 ### Generate allele-specific count matrices
 
-`count_allelic.py` can be used to create allele-specific count matrices and .bam files. Required inputs are a filtered alignment, a phased .vcf file with heterozygous variants (for a single sample) as well as a cell index and regions file. Cell identifiers are assumed to be stored under the 'CB' tag in the input .bam file. Only diploid genomes are supported. For more reliable estimates of allele-specific signals, we recommend filtering for mapping biases using [WASP](https://github.com/bmvdgeijn/WASP/tree/master/mapping).
+`count_allelic.py` can be used to create allele-specific count matrices and .bam files. Required inputs are a filtered alignment, a phased .vcf file with heterozygous variants (for a single sample) as well as a cell index and regions file. Cell identifiers are assumed to be stored under the 'CB' tag in the input .bam file. Only diploid genomes are supported. In order to obtain reliable estimates of allele-specific signals, we recommend filtering for mapping biases using [WASP](https://github.com/bmvdgeijn/WASP/tree/master/mapping).
 
 Requirements
 
